@@ -7,9 +7,9 @@ set(CMAKE_PDB_OUTPUT_DIRECTORY     "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TY
 
 project(addon)
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
+add_compile_options("-sDISABLE_EXCEPTION_CATCHING=0" "-sUSE_PTHREADS=1")
 
-target_compile_options(emnapi_noruntime PRIVATE "-sDISABLE_EXCEPTION_CATCHING=0" "-sUSE_PTHREADS=1")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
 
 add_executable(addon addon.cc async.cc pi_est.cc sync.cc)
 
