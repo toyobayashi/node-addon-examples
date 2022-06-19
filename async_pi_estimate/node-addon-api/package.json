@@ -6,7 +6,8 @@
   "private": true,
   "gypfile": true,
   "scripts": {
-    "test": "node addon.js"
+    "test": "node addon.js",
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "dependencies": {
     "node-addon-api": "*",
