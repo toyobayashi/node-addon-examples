@@ -1,6 +1,5 @@
 #include "myobject.h"
 #include <napi.h>
-#include <uv.h>
 
 using namespace Napi;
 

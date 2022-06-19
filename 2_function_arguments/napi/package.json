@@ -8,7 +8,8 @@
     "bindings": "~1.2.1"
   },
   "scripts": {
-    "test": "node addon.js"
+    "test": "node addon.js",
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "gypfile": true
 }

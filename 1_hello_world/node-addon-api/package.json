@@ -9,7 +9,8 @@
     "node-addon-api": "^1.0.0"
   },
   "scripts": {
-    "test": "node hello.js"
+    "test": "node hello.js",
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "gypfile": true
 }

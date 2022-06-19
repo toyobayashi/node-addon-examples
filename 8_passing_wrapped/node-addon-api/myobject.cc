@@ -1,6 +1,5 @@
 #include "myobject.h"
 #include <napi.h>
-#include <uv.h>
 
 MyObject::MyObject(const Napi::CallbackInfo& info)
     : Napi::ObjectWrap<MyObject>(info) {
@@ -12,8 +11,9 @@ void MyObject::Init(Napi::Env env, Napi::Object exports) {
 
   Napi::FunctionReference* constructor = new Napi::FunctionReference();
   *constructor = Napi::Persistent(func);
-  env.SetInstanceData(constructor); //NOTE: this assumes only 1 class is exported
-                                    //for multiple exported classes, need a struct or other mechanism
+  env.SetInstanceData(constructor);  // NOTE: this assumes only 1 class is
+                                     // exported for multiple exported classes,
+                                     // need a struct or other mechanism
 
   exports.Set("MyObject", func);
 }

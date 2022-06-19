@@ -8,7 +8,8 @@
     "bindings": "~1.2.1"
   },
   "scripts": {
-    "test": "node hello.js"
+    "test": "node hello.js",
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "gypfile": true
 }
