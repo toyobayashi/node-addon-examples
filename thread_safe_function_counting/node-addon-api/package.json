@@ -11,5 +11,8 @@
   },
   "engines": {
     "node": ">= 10.16.0"
+  },
+  "scripts": {
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   }
 }
