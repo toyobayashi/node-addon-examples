@@ -6,7 +6,8 @@
   "private": true,
   "gypfile": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "dependencies": {
     "node-addon-api": "*",
