@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tybys/denostd/dist/umd/node/events.min.js"></script>
+  <script src="./build/Release/emit_from_cpp.js"></script>
+  <script>
+    Module.onRuntimeInitialized = function () {
+      const addon = Module.emnapiExports
+      const emitter = new denostd.node.events.EventEmitter()
+
+      emitter.on('start', () => {
+          console.log('### START ...')
+      })
+      emitter.on('data', (evt) => {
+          console.log(evt);
+      })
+
+      emitter.on('end', () => {
+          console.log('### END ###')
+      })
+
+      addon.callEmit(emitter.emit.bind(emitter))
+    }
+  </script>
+</body>
+</html>
