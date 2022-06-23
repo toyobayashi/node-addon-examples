@@ -7,7 +7,8 @@
     "node-addon-api": "^1.1.0"
   },
   "scripts": {
-    "test": "node --napi-modules ./test/Test.js"
+    "test": "node --napi-modules ./test/Test.js",
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "gypfile": true,
   "keywords": [

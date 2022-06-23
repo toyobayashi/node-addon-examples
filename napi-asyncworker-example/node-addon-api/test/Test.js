@@ -1,4 +1,4 @@
-const runWorker = require('../build/Release/napi-asyncworker-example-native');
+const runWorker = require('../build/Release/napi-asyncworker-example-native.node');
 
 let result = runWorker.runSimpleAsyncWorker(2, AsyncWorkerCompletion);
 console.log("runSimpleAsyncWorker returned '"+result+"'.");
