@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "node index.js",
-    "install": "cmake-js compile"
+    "install": "emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "gypfile": true
 }
