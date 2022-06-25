@@ -1,4 +1,7 @@
 #include <napi.h>
+#ifdef __EMSCRIPTEN__
+#include <emnapi.h>
+#endif
 #include <cstdio>
 
 static Napi::Value AcceptByteArray(const Napi::CallbackInfo& info) {
@@ -78,6 +81,21 @@ static Napi::Value CreateByteArray(const Napi::CallbackInfo& info) {
   }
   printf("\b\b]\n");
 
+#ifdef __EMSCRIPTEN__
+  napi_value byteArray;
+  napi_status r = emnapi_create_external_uint8array(info.Env(),
+    nativeArray->data(),
+    arrayLength,
+    [](napi_env /*env*/, void* /*data*/, void* hint) {
+      std::unique_ptr<std::vector<uint8_t>> vectorPtrToDelete(static_cast<std::vector<uint8_t>*>(hint));
+    },
+    nativeArray.get(),
+    &byteArray);
+  if (r != napi_ok) {
+    Napi::Error::New(info.Env(), "emnapi_create_external_uint8array failed").ThrowAsJavaScriptException();
+    return Napi::Value();
+  }
+#else
   // Wrap up the std::vector into the ArrayBuffer.
   // Note: instead of wrapping the std::vector we could allow ArrayBuffer to
   // create internal storage that copies the std::vector, but it is less
@@ -90,13 +108,19 @@ static Napi::Value CreateByteArray(const Napi::CallbackInfo& info) {
         std::unique_ptr<std::vector<uint8_t>> vectorPtrToDelete(hint);
       },
       nativeArray.get());
+#endif
+
   // The finalizer is responsible for deleting the vector: release the
   // unique_ptr ownership.
   nativeArray.release();
 
+#ifdef __EMSCRIPTEN__
+  return Napi::Value(info.Env(), byteArray);
+#else
   Napi::Uint8Array byteArray = Napi::Uint8Array::New(info.Env(), arrayLength, arrayBuffer, 0);
   
   return byteArray;
+#endif
 }
 
 static Napi::Object Init(Napi::Env env, Napi::Object exports) {
