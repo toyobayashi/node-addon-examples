@@ -1,7 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef __EMSCRIPTEN__
+#include <pthread.h>
+#define thread_t pthread_t
+#define mutex_t pthread_mutex_t
+#define mutex_init(p) pthread_mutex_init((p), NULL)
+#define thread_join(p) pthread_join(*(p), NULL)
+#define thread_create(p, f, d) pthread_create((p), NULL, (f), (d))
+#define mutex_lock(p) pthread_mutex_lock((p))
+#define mutex_unlock(p) pthread_mutex_unlock((p))
+#define mutex_destroy(p) pthread_mutex_destroy((p))
+#else
 #include <uv.h>
+#define thread_t uv_thread_t
+#define mutex_t uv_mutex_t
+#define mutex_init(p) uv_mutex_init((p))
+#define thread_join(p) uv_thread_join((p))
+#define thread_create(p, f, d) uv_thread_create((p), (f), (d))
+#define mutex_lock(p) uv_mutex_lock((p))
+#define mutex_unlock(p) uv_mutex_unlock((p))
+#define mutex_destroy(p) uv_mutex_destroy((p))
+#endif
+
 #define NAPI_EXPERIMENTAL
 #include <node_api.h>
 
@@ -36,8 +58,8 @@ typedef struct ThreadItem {
 // global static variables, while allowing multiple instances of the addon to
 // co-exist.
 typedef struct {
-  uv_mutex_t check_status_mutex;
-  uv_thread_t the_thread;
+  mutex_t check_status_mutex;
+  thread_t the_thread;
   napi_threadsafe_function tsfn;
   napi_ref thread_item_constructor;
   bool js_accepts;
@@ -103,7 +125,7 @@ static void CallJs(napi_env env, napi_value js_cb, void* context, void* data) {
 static void ThreadFinished(napi_env env, void* data, void* context) {
   (void) context;
   AddonData* addon_data = (AddonData*)data;
-  CHECK(uv_thread_join(&(addon_data->the_thread)) == 0);
+  CHECK(thread_join(&(addon_data->the_thread)) == 0);
   addon_data->tsfn = NULL;
 }
 
@@ -117,7 +139,13 @@ static void ThreadFinished(napi_env env, void* data, void* context) {
 // `addon_data->js_accepts`. When set to `false`, the JavaScript thread will not
 // access the thread items any further, so they can be safely deleted on this
 // thread.
-static void PrimeThread(void* data) {
+static
+#ifdef __EMSCRIPTEN__
+void*
+#else
+void
+#endif
+PrimeThread(void* data) {
   AddonData* addon_data = (AddonData*) data;
   int idx_outer, idx_inner;
   int prime_count = 0;
@@ -160,7 +188,7 @@ static void PrimeThread(void* data) {
         current != NULL && returned == NULL;
         previous = current,
         current = current->next) {
-      uv_mutex_lock(&(addon_data->check_status_mutex));
+      mutex_lock(&(addon_data->check_status_mutex));
       if (current->call_has_returned) {
         // Unhook the call that has returned from the list.
         if (previous != NULL) {
@@ -170,7 +198,7 @@ static void PrimeThread(void* data) {
         }
         returned = current;
       }
-      uv_mutex_unlock(&(addon_data->check_status_mutex));
+      mutex_unlock(&(addon_data->check_status_mutex));
     }
 
     // Process a return value. Free the `ThreadItem` that returned it, and break
@@ -201,6 +229,9 @@ static void PrimeThread(void* data) {
   // background.
   CHECK(napi_release_threadsafe_function(addon_data->tsfn,
                                           napi_tsfn_release) == napi_ok);
+#ifdef __EMSCRIPTEN__
+  return NULL;
+#endif
 }
 
 // This binding can be called from JavaScript to start the asynchronous prime
@@ -248,7 +279,7 @@ static napi_value StartThread(napi_env env, napi_callback_info info) {
 
   // Create the thread that will produce primes and that will call into
   // JavaScript using the thread-safe function.
-  CHECK(uv_thread_create(&(addon_data->the_thread), PrimeThread, addon_data) == 0);
+  CHECK(thread_create(&(addon_data->the_thread), PrimeThread, addon_data) == 0);
 
   return NULL;
 }
@@ -314,10 +345,10 @@ static napi_value RegisterReturnValue(napi_env env, napi_callback_info info) {
   }
 
   // Mark the thread item as resolved, and record the JavaScript return value.
-  uv_mutex_lock(&(addon_data->check_status_mutex));
+  mutex_lock(&(addon_data->check_status_mutex));
   item->call_has_returned = true;
   item->return_value = return_value;
-  uv_mutex_unlock(&(addon_data->check_status_mutex));
+  mutex_unlock(&(addon_data->check_status_mutex));
 
   return NULL;
 }
@@ -344,7 +375,7 @@ static napi_value GetPrime(napi_env env, napi_callback_info info) {
 
 static void addon_is_unloading(napi_env env, void* data, void* hint) {
   AddonData* addon_data = (AddonData*)data;
-  uv_mutex_destroy(&(addon_data->check_status_mutex));
+  mutex_destroy(&(addon_data->check_status_mutex));
   CHECK(napi_delete_reference(env,
                                addon_data->thread_item_constructor) == napi_ok);
   free(data);
@@ -374,7 +405,7 @@ static void addon_is_unloading(napi_env env, void* data, void* hint) {
 
   // Initialize the various members of the `AddonData` associated with this
   // addon instance.
-  CHECK(uv_mutex_init(&(addon_data->check_status_mutex)) == 0);
+  CHECK(mutex_init(&(addon_data->check_status_mutex)) == 0);
 
   napi_value thread_item_class;
   napi_property_descriptor thread_item_properties[] = {

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="./build/Release/round_trip.js"></script>
+  <script>
+    Module.onRuntimeInitialized = function () {
+      const bindings = Module.emnapiExports
+
+      bindings.startThread(item => {
+        const thePrime = item.prime;
+        console.log('The prime: ' + thePrime);
+
+        // Answer the call with a 90% probability of returning true somewhere between
+        // 200 and 400 ms from now.
+        setTimeout(() => {
+          const theAnswer = (Math.random() > 0.1);
+          console.log(thePrime + ': answering with ' + theAnswer);
+          bindings.registerReturnValue(item, theAnswer);
+        }, Math.random() * 200 + 200);
+      });
+    }
+  </script>
+</body>
+</html>
