@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="./build/Release/promise-callback-demo.js"></script>
+  <script>
+    Module.onRuntimeInitialized = function () {
+      const { PromiseCallbackDemo } = Module.emnapiExports
+
+      let shouldFail = false;
+      // Resolve or reject a promise with an ISO date format after 100 milliseconds
+      function jsCallback() {
+          return new Promise((resolve, reject) => setTimeout(() => {
+              ((shouldFail = !shouldFail) ? reject : resolve)(new Date().toISOString());
+          }, 100));
+      }
+
+      new PromiseCallbackDemo(jsCallback);
+    }
+  </script>
+</body>
+</html>

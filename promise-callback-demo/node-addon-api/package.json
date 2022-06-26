@@ -6,7 +6,7 @@
     "node-addon-api": "^4.0.0"
   },
   "scripts": {
-    "install": "node-gyp rebuild && node test"
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "engines": {
     "node": ">= 10.16.0"

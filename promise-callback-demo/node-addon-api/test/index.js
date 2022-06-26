@@ -1,4 +1,4 @@
-const { PromiseCallbackDemo } = require('../build/Release/promise-callback-demo');
+const { PromiseCallbackDemo } = require('../build/Release/promise-callback-demo.node');
 
 let shouldFail = false;
 // Resolve or reject a promise with an ISO date format after 100 milliseconds
