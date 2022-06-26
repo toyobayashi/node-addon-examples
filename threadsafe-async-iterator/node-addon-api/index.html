@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="./build/Release/example.js"></script>
+  <script>
+    Module.onRuntimeInitialized = function () {
+      const { ThreadSafeAsyncIteratorExample } = Module.emnapiExports
+
+      async function main(from, to) {
+          const iterator = new ThreadSafeAsyncIteratorExample(from, to);
+          for await (const value of iterator) {
+              console.log(value);
+          }
+      }
+
+      main(0, 5)
+          .catch(e => {
+              console.error(e);
+          });
+
+    }
+  </script>
+</body>
+</html>
