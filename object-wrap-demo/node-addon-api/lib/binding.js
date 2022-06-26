@@ -1,4 +1,4 @@
-const addon = require('../build/Release/object-wrap-demo-native');
+const addon = require('../build/Release/object-wrap-demo-native.node');
 
 function ObjectWrapDemo(name) {
     this.greet = function(str) {

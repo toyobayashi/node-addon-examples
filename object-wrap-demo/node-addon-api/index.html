@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="./build/Release/object-wrap-demo-native.js"></script>
+  <script>
+    Module.onRuntimeInitialized = function () {
+      function assert (v, m) {
+        if (!v) throw new Error(m)
+      }
+      assert.strictEqual = function (a, b, m) {
+        if (a !== b) throw new Error(m)
+      }
+      assert.doesNotThrow = function (f, e, m) {
+        try {
+          f()
+        } catch (err) {
+          throw new Error(m)
+        }
+      }
+      assert.throws = function (f, e, m) {
+        try {
+          f()
+        } catch (err) {
+          return
+        }
+        throw new Error(m)
+      }
+      const addon = Module.emnapiExports
+
+      function ObjectWrapDemo(name) {
+          this.greet = function(str) {
+              return _addonInstance.greet(str);
+          }
+
+          var _addonInstance = new addon.ObjectWrapDemo(name);
+      }
+
+      assert(ObjectWrapDemo, "The expected module is undefined");
+
+      function testBasic()
+      {
+          const instance = new ObjectWrapDemo("mr-yeoman");
+          assert(instance.greet, "The expected method is not defined");
+          assert.strictEqual(instance.greet("kermit"), "mr-yeoman", "Unexpected value returned");
+      }
+
+      function testInvalidParams()
+      {
+          const instance = new ObjectWrapDemo();
+      }
+
+      assert.doesNotThrow(testBasic, undefined, "testBasic threw an expection");
+      assert.throws(testInvalidParams, undefined, "testInvalidParams didn't throw");
+
+      console.log("Tests passed- everything looks OK!");
+    }
+  </script>
+</body>
+</html>
