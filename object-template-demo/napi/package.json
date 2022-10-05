@@ -6,7 +6,8 @@
   "private": true,
   "gypfile": true,
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "install": "node-gyp rebuild && emcmake cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild && cmake --build build"
   },
   "dependencies": {
     "bindings": "~1.5.0"
