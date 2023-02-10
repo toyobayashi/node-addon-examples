@@ -12,7 +12,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(object_template_demo object-template-demo.cc proxy-template.cc)
 
-target_link_libraries(object_template_demo emnapi_noruntime)
+target_link_libraries(object_template_demo emnapi)
 target_link_options(object_template_demo PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"

@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/napi-asyncworker-example-native.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const runWorker = Module.emnapiExports
+      const runWorker = Module.emnapiInit({ context: __emnapi_context__ })
       let result = runWorker.runSimpleAsyncWorker(2, AsyncWorkerCompletion);
       console.log("runSimpleAsyncWorker returned '"+result+"'.");
 

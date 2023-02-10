@@ -19,8 +19,8 @@
     ]
   },
   "dependencies": {
-    "@tybys/emnapi": "^0.19.2",
-    "@tybys/emnapi-runtime": "^0.19.2",
+    "@tybys/emnapi": "^0.29.1",
+    "@tybys/emnapi-runtime": "^0.29.1",
     "chalk": "^3.0.0",
     "clang-format": "^1.4.0",
     "glob": "^8.0.3",

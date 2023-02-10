@@ -13,7 +13,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(promise-callback-demo src/promise_callback_demo.cc)
 
-target_link_libraries(promise-callback-demo emnapi_noruntime)
+target_link_libraries(promise-callback-demo emnapi)
 target_link_options(promise-callback-demo PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"

@@ -13,7 +13,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(napi-asyncworker-example-native src/RunSimpleAsyncWorker.cc src/SimpleAsyncWorker.cc)
 
-target_link_libraries(napi-asyncworker-example-native emnapi_noruntime)
+target_link_libraries(napi-asyncworker-example-native emnapi)
 target_link_options(napi-asyncworker-example-native PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"

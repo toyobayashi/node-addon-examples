@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/example.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const { ThreadSafeAsyncIteratorExample } = Module.emnapiExports
+      const { ThreadSafeAsyncIteratorExample } = Module.emnapiInit({ context: __emnapi_context__ })
 
       async function main(from, to) {
           const iterator = new ThreadSafeAsyncIteratorExample(from, to);

@@ -38,7 +38,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(clock clock.cc)
 
-target_link_libraries(clock emnapi_noruntime)
+target_link_libraries(clock emnapi)
 target_link_options(clock PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"

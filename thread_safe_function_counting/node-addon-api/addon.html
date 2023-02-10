@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/addon.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const { createTSFN } = Module.emnapiExports
+      const { createTSFN } = Module.emnapiInit({ context: __emnapi_context__ })
       const callback = (...args) => { 
           console.log(new Date, ...args);
       }

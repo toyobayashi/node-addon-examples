@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/addon.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const addon = Module.emnapiExports
+      const addon = Module.emnapiInit({ context: __emnapi_context__ })
       addon(function(msg){
         console.log(msg) // 'hello world'
       })

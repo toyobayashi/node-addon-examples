@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/typed_array_to_native.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const binding = Module.emnapiExports
+      const binding = Module.emnapiInit({ context: __emnapi_context__ })
       {
           const byteArray = Uint8Array.from([10, 20, 30, 50, 25, 17]);
           console.log("byteArray: ", byteArray);

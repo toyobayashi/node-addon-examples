@@ -13,7 +13,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(typed_array_to_native typed_array_to_native.cc)
 
-target_link_libraries(typed_array_to_native emnapi_noruntime)
+target_link_libraries(typed_array_to_native emnapi)
 target_link_options(typed_array_to_native PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"

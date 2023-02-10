@@ -8,6 +8,7 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/object-wrap-demo-native.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
@@ -32,7 +33,7 @@
         }
         throw new Error(m)
       }
-      const addon = Module.emnapiExports
+      const addon = Module.emnapiInit({ context: __emnapi_context__ })
 
       function ObjectWrapDemo(name) {
           this.greet = function(str) {

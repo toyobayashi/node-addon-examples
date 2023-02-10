@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/addon.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const addon = Module.emnapiExports
+      const addon = Module.emnapiInit({ context: __emnapi_context__ })
       var obj1 = addon.createObject(10)
       var obj2 = addon.createObject(20)
       var result = addon.add(obj1, obj2)

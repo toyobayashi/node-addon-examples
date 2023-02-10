@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/round_trip.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const bindings = Module.emnapiExports
+      const bindings = Module.emnapiInit({ context: __emnapi_context__ })
 
       bindings.startThread(item => {
         const thePrime = item.prime;

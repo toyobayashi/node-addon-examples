@@ -11,7 +11,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(addon addon.c)
 
-target_link_libraries(addon emnapi_noruntime)
+target_link_libraries(addon emnapi)
 target_link_options(addon PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"

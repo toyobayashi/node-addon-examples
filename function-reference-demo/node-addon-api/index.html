@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/addon.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const { NativeAddon } = Module.emnapiExports
+      const { NativeAddon } = Module.emnapiInit({ context: __emnapi_context__ })
       function JSFnRef() {
           console.log('Hi! I\'m a JS function reference!')
       }

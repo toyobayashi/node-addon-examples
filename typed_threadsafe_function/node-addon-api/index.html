@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/clock.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const { start } = Module.emnapiExports
+      const { start } = Module.emnapiInit({ context: __emnapi_context__ })
       start.call(new Date(), function (clock) {
           const context = this;
           console.log(context, clock);

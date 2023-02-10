@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/array_buffer_to_native.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const binding = Module.emnapiExports
+      const binding = Module.emnapiInit({ context: __emnapi_context__ })
       const array = new Int32Array(10)
 
       array[0] = 19

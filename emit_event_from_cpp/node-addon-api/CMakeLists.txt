@@ -12,7 +12,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(emit_from_cpp src/emit-from-cpp.cc)
 
-target_link_libraries(emit_from_cpp emnapi_noruntime)
+target_link_libraries(emit_from_cpp emnapi)
 target_link_options(emit_from_cpp PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"

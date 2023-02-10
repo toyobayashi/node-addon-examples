@@ -12,7 +12,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(native_emitter src/binding.cc src/native-emitter.cc)
 
-target_link_libraries(native_emitter emnapi_noruntime)
+target_link_libraries(native_emitter emnapi)
 target_link_options(native_emitter PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"

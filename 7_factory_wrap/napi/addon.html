@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/addon.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const createObject = Module.emnapiExports
+      const createObject = Module.emnapiInit({ context: __emnapi_context__ })
       var obj = createObject(10)
       console.log( obj.plusOne() ) // 11
       console.log( obj.plusOne() ) // 12

@@ -8,10 +8,11 @@
 </head>
 <body>
   <script src="../../node_modules/@tybys/emnapi-runtime/dist/emnapi.min.js"></script>
+  <script src="../../context.js"></script>
   <script src="./build/Release/promise-callback-demo.js"></script>
   <script>
     Module.onRuntimeInitialized = function () {
-      const { PromiseCallbackDemo } = Module.emnapiExports
+      const { PromiseCallbackDemo } = Module.emnapiInit({ context: __emnapi_context__ })
 
       let shouldFail = false;
       // Resolve or reject a promise with an ISO date format after 100 milliseconds

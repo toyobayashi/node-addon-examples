@@ -13,7 +13,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" 
 
 add_executable(object-wrap-demo-native src/object_wrap_demo.cc)
 
-target_link_libraries(object-wrap-demo-native emnapi_noruntime)
+target_link_libraries(object-wrap-demo-native emnapi)
 target_link_options(object-wrap-demo-native PRIVATE
   "-sEXPORTED_FUNCTIONS=['_malloc','_free']"
   "-sALLOW_MEMORY_GROWTH=1"
