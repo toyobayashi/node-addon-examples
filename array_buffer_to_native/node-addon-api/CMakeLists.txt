@@ -8,7 +8,7 @@ set(CMAKE_PDB_OUTPUT_DIRECTORY     "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TY
 project(array_buffer_to_native)
 
 add_compile_options("-sDISABLE_EXCEPTION_CATCHING=0")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
 
 add_executable(array_buffer_to_native array_buffer_to_native.cc)
 

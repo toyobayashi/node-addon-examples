@@ -9,7 +9,7 @@ project(promise-callback-demo)
 
 add_compile_options("-sDISABLE_EXCEPTION_CATCHING=0" "-sUSE_PTHREADS=1")
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
 
 add_executable(promise-callback-demo src/promise_callback_demo.cc)
 

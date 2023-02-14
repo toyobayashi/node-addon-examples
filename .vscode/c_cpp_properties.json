@@ -52,7 +52,7 @@
       "intelliSenseMode": "linux-clang-x86",
       "cStandard": "c11",
       "cppStandard": "c++14",
-      "includePath": ["${includePath}", "${workspaceFolder}/node_modules/@tybys/emnapi/include"]
+      "includePath": ["${includePath}", "${workspaceFolder}/node_modules/emnapi/include"]
     },
     {
       "name": "Win32 Emscripten",
@@ -61,7 +61,7 @@
       "intelliSenseMode": "linux-clang-x86",
       "cStandard": "c11",
       "cppStandard": "c++14",
-      "includePath": ["${includePath}", "${workspaceFolder}/node_modules/@tybys/emnapi/include"]
+      "includePath": ["${includePath}", "${workspaceFolder}/node_modules/emnapi/include"]
     }
   ],
   "version": 4

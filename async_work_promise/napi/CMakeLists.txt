@@ -9,7 +9,7 @@ project(binding)
 
 add_compile_options("-sUSE_PTHREADS=1")
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
 
 add_executable(binding binding.c)
 

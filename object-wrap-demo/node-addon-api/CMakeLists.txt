@@ -9,7 +9,7 @@ project(object-wrap-demo-native)
 
 add_compile_options("-sDISABLE_EXCEPTION_CATCHING=0")
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/@tybys/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../node_modules/emnapi" "${CMAKE_CURRENT_SOURCE_DIR}/build/emnapi")
 
 add_executable(object-wrap-demo-native src/object_wrap_demo.cc)
 
